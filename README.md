@@ -1,4 +1,4 @@
-- 👋 Hi, I’m @AlexanderSalomon
+- 👋 Hi, I’m @Alexandre Salomon
 - 👀 I’m interested in Visual Design Code
 - 🌱 I’m currently learning Front Developer
 - 💞️ I’m looking to collaborate to peace.
