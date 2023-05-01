@@ -1,7 +1,7 @@
 - 👋 Hi, I’m @AlexanderSalomon
-- 👀 I’m interested in Visual Design and Nasa/ESA
+- 👀 I’m interested in Visual Design Code
 - 🌱 I’m currently learning Front Developer
-- 💞️ I’m looking to collaborate on world peace!!!
+- 💞️ I’m looking to collaborate to peace.
 - 📫 How to reach me @salomon
 
 <!---
