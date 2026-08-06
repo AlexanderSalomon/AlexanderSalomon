@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rascunho — Sort by / Filtros de Convidados</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <main class="board">
+    <header class="board-header">
+      <p class="eyebrow">Rascunho Figma · Guest groups</p>
+      <h1>Sort by + filtros</h1>
+      <p class="lede">Lista de grupos com lado, categoria e ordenação — para controle de status e atividades.</p>
+    </header>
+
+    <section class="frames" aria-label="Telas do rascunho">
+      <!-- SCREEN 1: Lista -->
+      <article class="phone" data-label="01 · Lista de grupos">
+        <div class="phone-chrome">
+          <span class="time">9:41</span>
+          <span class="status-dots" aria-hidden="true"></span>
+        </div>
+
+        <div class="screen">
+          <header class="app-top">
+            <button class="icon-btn" type="button" aria-label="Voltar">←</button>
+            <div class="app-titles">
+              <p class="brand">Convité</p>
+              <h2>Lista de grupos</h2>
+            </div>
+            <button class="icon-btn" type="button" aria-label="Adicionar">+</button>
+          </header>
+
+          <label class="search">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input type="search" placeholder="Buscar grupos…" value="" />
+          </label>
+
+          <div class="side-toggle" role="tablist" aria-label="Lado">
+            <button class="side is-active" type="button" role="tab" aria-selected="true">Todos</button>
+            <button class="side" type="button" role="tab" aria-selected="false">Noivo</button>
+            <button class="side" type="button" role="tab" aria-selected="false">Noiva</button>
+          </div>
+
+          <div class="chips-row" aria-label="Categorias">
+            <button class="chip is-active" type="button">Army <em>4</em></button>
+            <button class="chip" type="button">Friends <em>9</em></button>
+            <button class="chip" type="button">School <em>3</em></button>
+            <button class="chip" type="button">Work <em>5</em></button>
+            <button class="chip" type="button">Family <em>11</em></button>
+            <button class="chip chip-add" type="button">+ Nova</button>
+          </div>
+
+          <div class="sort-bar">
+            <p class="results">12 grupos</p>
+            <button class="sort-trigger" type="button" id="open-sort" aria-haspopup="dialog">
+              Ordenar: Status
+              <span aria-hidden="true">▾</span>
+            </button>
+          </div>
+
+          <ul class="group-list">
+            <li class="group-item">
+              <div class="group-meta">
+                <h3>Pelotão Alpha</h3>
+                <p><span class="tag">Army</span><span class="dot">·</span><span>Noivo</span></p>
+              </div>
+              <div class="group-status">
+                <span class="pill warn">4 pendentes</span>
+                <span class="count">8/12</span>
+              </div>
+            </li>
+            <li class="group-item">
+              <div class="group-meta">
+                <h3>Companhia Norte</h3>
+                <p><span class="tag">Army</span><span class="dot">·</span><span>Noivo</span></p>
+              </div>
+              <div class="group-status">
+                <span class="pill ok">Confirmado</span>
+                <span class="count">6/6</span>
+              </div>
+            </li>
+            <li class="group-item">
+              <div class="group-meta">
+                <h3>Reserva 3ª</h3>
+                <p><span class="tag">Army</span><span class="dot">·</span><span>Noivo</span></p>
+              </div>
+              <div class="group-status">
+                <span class="pill muted">Convites enviados</span>
+                <span class="count">2/10</span>
+              </div>
+            </li>
+            <li class="group-item">
+              <div class="group-meta">
+                <h3>Oficiais</h3>
+                <p><span class="tag">Army</span><span class="dot">·</span><span>Noivo</span></p>
+              </div>
+              <div class="group-status">
+                <span class="pill warn">1 recusa</span>
+                <span class="count">9/10</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- SCREEN 2: Sort sheet -->
+      <article class="phone phone-dim" data-label="02 · Sheet Ordenar">
+        <div class="phone-chrome">
+          <span class="time">9:41</span>
+          <span class="status-dots" aria-hidden="true"></span>
+        </div>
+
+        <div class="screen screen-blur">
+          <header class="app-top">
+            <button class="icon-btn" type="button" aria-label="Voltar">←</button>
+            <div class="app-titles">
+              <p class="brand">Convité</p>
+              <h2>Lista de grupos</h2>
+            </div>
+            <button class="icon-btn" type="button" aria-label="Adicionar">+</button>
+          </header>
+          <div class="ghost-block"></div>
+          <div class="ghost-block short"></div>
+        </div>
+
+        <div class="sheet" role="dialog" aria-label="Ordenar por">
+          <div class="sheet-handle" aria-hidden="true"></div>
+          <header class="sheet-head">
+            <h2>Ordenar por</h2>
+            <p>Como a lista de grupos deve aparecer</p>
+          </header>
+          <ul class="sort-options">
+            <li>
+              <button type="button" class="sort-option">
+                <span>Nome A–Z</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="sort-option">
+                <span>Nome Z–A</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="sort-option">
+                <span>Mais recentes</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="sort-option is-selected">
+                <span>Status</span>
+                <span class="check" aria-hidden="true">✓</span>
+              </button>
+            </li>
+            <li>
+              <button type="button" class="sort-option">
+                <span>Tamanho do grupo</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- SCREEN 3: Nova categoria -->
+      <article class="phone" data-label="03 · Nova categoria">
+        <div class="phone-chrome">
+          <span class="time">9:41</span>
+          <span class="status-dots" aria-hidden="true"></span>
+        </div>
+
+        <div class="screen">
+          <header class="app-top">
+            <button class="icon-btn" type="button" aria-label="Fechar">✕</button>
+            <div class="app-titles">
+              <p class="brand">Convité</p>
+              <h2>Nova categoria</h2>
+            </div>
+            <span class="icon-btn ghost"></span>
+          </header>
+
+          <form class="new-cat" onsubmit="return false">
+            <label>
+              <span>Nome</span>
+              <input type="text" value="Church" placeholder="Ex.: Vizinhos, Igreja…" />
+            </label>
+
+            <fieldset>
+              <legend>Lado padrão</legend>
+              <div class="side-toggle compact">
+                <button class="side" type="button">Noivo</button>
+                <button class="side is-active" type="button">Noiva</button>
+                <button class="side" type="button">Ambos</button>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>Cor do chip</legend>
+              <div class="swatches" role="listbox" aria-label="Cores">
+                <button class="swatch is-active" type="button" style="--sw:#2F5D50" aria-label="Verde"></button>
+                <button class="swatch" type="button" style="--sw:#8B5E3C" aria-label="Terra"></button>
+                <button class="swatch" type="button" style="--sw:#3D5A80" aria-label="Azul"></button>
+                <button class="swatch" type="button" style="--sw:#6B4E71" aria-label="Ameixa"></button>
+                <button class="swatch" type="button" style="--sw:#B08D57" aria-label="Ouro"></button>
+              </div>
+            </fieldset>
+
+            <button class="cta" type="button">Criar categoria</button>
+          </form>
+
+          <p class="hint">A categoria aparece nos chips e no passo de escolher grupos após o acesso aos contatos.</p>
+        </div>
+      </article>
+    </section>
+
+    <aside class="notes">
+      <h2>Como usar no Figma</h2>
+      <ol>
+        <li><strong>Filtros</strong> = lado (segmented) + categorias (chips). São “o que ver”.</li>
+        <li><strong>Sort by</strong> = botão à direita que abre sheet. É “como ordenar”.</li>
+        <li>Chips com contador <code>Army 4</code> ajudam no controle da lista.</li>
+        <li>Multi-select nas categorias; lado é single-select.</li>
+        <li>Card do grupo: nome + categoria/lado + status + progresso RSVP.</li>
+      </ol>
+    </aside>
+  </main>
+
+  <!-- Interactive overlay for demo -->
+  <div class="overlay hidden" id="sort-overlay" aria-hidden="true">
+    <div class="sheet live-sheet" role="dialog" aria-modal="true" aria-label="Ordenar por">
+      <div class="sheet-handle"></div>
+      <header class="sheet-head">
+        <h2>Ordenar por</h2>
+        <p>Como a lista de grupos deve aparecer</p>
+      </header>
+      <ul class="sort-options" id="live-sort-options">
+        <li><button type="button" class="sort-option" data-value="Nome A–Z"><span>Nome A–Z</span></button></li>
+        <li><button type="button" class="sort-option" data-value="Nome Z–A"><span>Nome Z–A</span></button></li>
+        <li><button type="button" class="sort-option" data-value="Mais recentes"><span>Mais recentes</span></button></li>
+        <li><button type="button" class="sort-option is-selected" data-value="Status"><span>Status</span><span class="check">✓</span></button></li>
+        <li><button type="button" class="sort-option" data-value="Tamanho do grupo"><span>Tamanho do grupo</span></button></li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
