@@ -1,0 +1,198 @@
+/**
+ * Glass Button — botão profissional semi-fosco (glassmorphism)
+ * Dimensões padrão: 340×50px · bordas 50% (pill)
+ *
+ * Reutilize a cor/padrão via variáveis CSS:
+ *   --glass-tint          cor de tingimento (qualquer solid/gradient/pattern)
+ *   --glass-tint-opacity  opacidade do tingimento (0–1)
+ *   --glass-blur          intensidade do desfoque
+ *   --glass-text          cor do texto
+ *   --glass-width / --glass-height
+ */
+
+.glass-button {
+  /* ——— API reutilizável ——— */
+  --glass-width: 340px;
+  --glass-height: 50px;
+  --glass-radius: 50%; /* pill em retângulo 340×50 */
+  --glass-blur: 18px;
+  --glass-saturate: 160%;
+  --glass-tint: #ffffff;
+  --glass-tint-opacity: 0.22;
+  --glass-highlight: rgba(255, 255, 255, 0.55);
+  --glass-edge: rgba(255, 255, 255, 0.28);
+  --glass-shadow: rgba(0, 0, 0, 0.28);
+  --glass-text: #ffffff;
+  --glass-font: "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+  --glass-font-size: 16px;
+  --glass-font-weight: 600;
+  --glass-letter-spacing: 0.02em;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--glass-width);
+  height: var(--glass-height);
+  max-width: 100%;
+  padding: 0 24px;
+  margin: 0;
+  border: 1px solid var(--glass-edge);
+  border-radius: var(--glass-radius);
+  overflow: hidden;
+  isolation: isolate;
+
+  /* Fundo base semi-transparente — o tint é aplicado no ::before */
+  background: transparent;
+  color: var(--glass-text);
+  font-family: var(--glass-font);
+  font-size: var(--glass-font-size);
+  font-weight: var(--glass-font-weight);
+  letter-spacing: var(--glass-letter-spacing);
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  appearance: none;
+  user-select: none;
+
+  /* Profundidade: sombra externa + brilho interno superior */
+  box-shadow:
+    0 1px 0 0 var(--glass-highlight) inset,
+    0 -1px 0 0 rgba(0, 0, 0, 0.12) inset,
+    0 8px 24px -4px var(--glass-shadow),
+    0 2px 6px -1px rgba(0, 0, 0, 0.18);
+
+  /* Vidro fosco — funciona sobre qualquer fundo */
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+
+  transition:
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    filter 180ms ease;
+}
+
+/* Camada de tingimento reutilizável (cor sólida, gradiente ou padrão) */
+.glass-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--glass-tint);
+  opacity: var(--glass-tint-opacity);
+  pointer-events: none;
+}
+
+/* Reflexo superior — reforça o efeito de vidro */
+.glass-button::after {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 1px;
+  height: 45%;
+  border-radius: inherit;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.08) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass-button > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ——— Estados ——— */
+.glass-button:hover {
+  --glass-tint-opacity: 0.3;
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 1px 0 0 var(--glass-highlight) inset,
+    0 -1px 0 0 rgba(0, 0, 0, 0.1) inset,
+    0 12px 28px -4px var(--glass-shadow),
+    0 4px 10px -2px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+.glass-button:active {
+  --glass-tint-opacity: 0.18;
+  transform: translateY(1px) scale(0.985);
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.35) inset,
+    0 2px 8px -2px var(--glass-shadow),
+    0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.glass-button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.7);
+  outline-offset: 3px;
+}
+
+.glass-button:disabled,
+.glass-button[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+  filter: grayscale(0.2);
+}
+
+/* ——— Presets de cor (opcional) ——— */
+.glass-button--clear {
+  --glass-tint: #ffffff;
+  --glass-tint-opacity: 0.16;
+}
+
+.glass-button--frost {
+  --glass-tint: #f0f4f8;
+  --glass-tint-opacity: 0.28;
+  --glass-text: #1a1a1a;
+  --glass-highlight: rgba(255, 255, 255, 0.7);
+}
+
+.glass-button--blue {
+  --glass-tint: #3b82f6;
+  --glass-tint-opacity: 0.38;
+}
+
+.glass-button--teal {
+  --glass-tint: #14b8a6;
+  --glass-tint-opacity: 0.38;
+}
+
+.glass-button--rose {
+  --glass-tint: #f43f5e;
+  --glass-tint-opacity: 0.36;
+}
+
+.glass-button--dark {
+  --glass-tint: #0f172a;
+  --glass-tint-opacity: 0.45;
+  --glass-edge: rgba(255, 255, 255, 0.18);
+}
+
+/* Padrão/gradiente customizado via variável */
+.glass-button--pattern {
+  --glass-tint: linear-gradient(135deg, #60a5fa 0%, #a78bfa 50%, #f472b6 100%);
+  --glass-tint-opacity: 0.42;
+}
+
+/* Fallback quando backdrop-filter não é suportado */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass-button {
+    background: color-mix(in srgb, var(--glass-tint) 55%, transparent);
+  }
+
+  .glass-button::before {
+    opacity: 0.55;
+  }
+}

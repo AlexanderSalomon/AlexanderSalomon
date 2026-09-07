@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Glass Button — Demo</title>
+  <link rel="stylesheet" href="../css/glass-button.css" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+      color: #fff;
+      background: #0b0d12;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    p.lead {
+      margin: 0 0 28px;
+      opacity: 0.7;
+      font-size: 0.9rem;
+    }
+
+    .scenes {
+      display: grid;
+      gap: 0;
+    }
+
+    .scene {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 220px;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .scene__label {
+      margin: 0 0 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .scene--photo {
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.35)),
+        url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80")
+          center / cover no-repeat;
+    }
+
+    .scene--gradient {
+      background: linear-gradient(135deg, #0ea5e9, #6366f1 45%, #ec4899);
+    }
+
+    .scene--dark {
+      background: radial-gradient(ellipse at 30% 20%, #1e293b, #020617 70%);
+    }
+
+    .scene--pattern {
+      background-color: #111827;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(56, 189, 248, 0.35), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(244, 114, 182, 0.3), transparent 35%),
+        repeating-linear-gradient(
+          -12deg,
+          transparent,
+          transparent 12px,
+          rgba(255, 255, 255, 0.03) 12px,
+          rgba(255, 255, 255, 0.03) 13px
+        );
+    }
+
+    .scene--light {
+      background: linear-gradient(160deg, #e2e8f0, #f8fafc 40%, #cbd5e1);
+      color: #0f172a;
+    }
+
+    .scene--light .scene__label {
+      opacity: 0.55;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+    .intro {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 48px 24px 24px;
+    }
+
+    code {
+      font-size: 0.85em;
+      padding: 0.1em 0.4em;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .usage {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+      font-size: 0.9rem;
+      line-height: 1.55;
+      opacity: 0.85;
+    }
+
+    .usage pre {
+      overflow-x: auto;
+      padding: 16px;
+      border-radius: 12px;
+      background: #151922;
+      color: #e2e8f0;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <header class="intro">
+    <h1>Glass Button</h1>
+    <p class="lead">
+      340×50px · 50% rounded · vidro semi-fosco com profundidade ·
+      tingimento reutilizável via <code>--glass-tint</code>
+    </p>
+  </header>
+
+  <div class="scenes">
+    <section class="scene scene--photo">
+      <p class="scene__label">Sobre foto</p>
+      <button type="button" class="glass-button">Continuar</button>
+    </section>
+
+    <section class="scene scene--gradient">
+      <p class="scene__label">Sobre gradiente</p>
+      <button type="button" class="glass-button glass-button--blue">Entrar</button>
+    </section>
+
+    <section class="scene scene--dark">
+      <p class="scene__label">Sobre fundo escuro</p>
+      <button type="button" class="glass-button glass-button--teal">Salvar alterações</button>
+    </section>
+
+    <section class="scene scene--pattern">
+      <p class="scene__label">Sobre padrão + presets</p>
+      <div class="row">
+        <button type="button" class="glass-button glass-button--clear">Clear</button>
+        <button type="button" class="glass-button glass-button--rose">Rose</button>
+        <button type="button" class="glass-button glass-button--pattern">Pattern</button>
+      </div>
+    </section>
+
+    <section class="scene scene--light">
+      <p class="scene__label">Sobre fundo claro</p>
+      <button type="button" class="glass-button glass-button--frost">Confirmar</button>
+    </section>
+  </div>
+
+  <section class="usage">
+    <p>Uso básico e customização:</p>
+    <pre><code>&lt;link rel="stylesheet" href="css/glass-button.css" /&gt;
+
+&lt;button class="glass-button"&gt;Continuar&lt;/button&gt;
+
+&lt;!-- Cor / padrão reutilizável --&gt;
+&lt;button
+  class="glass-button"
+  style="--glass-tint: #22c55e; --glass-tint-opacity: 0.4;"
+&gt;
+  Verde custom
+&lt;/button&gt;
+
+&lt;button
+  class="glass-button"
+  style="--glass-tint: url('pattern.png') center / cover;"
+&gt;
+  Com padrão
+&lt;/button&gt;</code></pre>
+  </section>
+</body>
+</html>
