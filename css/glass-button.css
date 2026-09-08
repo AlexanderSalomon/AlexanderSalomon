@@ -1,56 +1,58 @@
 /**
- * Glass Button — material óptico em camadas
- * 340×50 · radius 50% (cápsula) · vidro semi-fosco físico
+ * Glass Button — material do modelo de referência
+ * Cápsula 340×50 · radius 50% · variante circular
  *
- * Estrutura (cada camada tem função óptica, nenhuma é ornamentação):
- *   1. Backdrop   — blur + saturação do que está atrás (frost)
- *   2. Body tint  — lavagem translúcida reutilizável (--glass-tint)
- *   3. Rim        — aresta do vidro (Fresnel / borda)
- *   4. Specular   — glint superior (luz incidente)
- *   5. Inner depth— espessura do painel
- *   6. Elevation  — sombra de contato com o fundo
+ * Leitura do modelo:
+ *   • vidro acetinado / leitoso (frost + lavagem branca)
+ *   • luz de cima-esquerda → rim fino e claro no topo/esquerda
+ *   • sombra difusa de contato (elevação baixa, suave)
+ *   • tipografia minúscula, off-white integrado ao material
+ *   • estrutura fixa; só o tingimento muda
  *
- * Bauhaus / ESDI: verdade do material — o vidro se comporta como vidro.
- * CSM / SVA: tipografia e hierarquia a serviço da função.
- * Ajuste cromático só via --glass-tint (R G B) + --glass-tint-opacity.
+ * Camadas ópticas:
+ *   1 Backdrop · 2 Body tint · 3 Rim · 4 Specular · 5 Depth · 6 Elevation
  */
 
 .glass-button {
-  /* ——— tokens do material ——— */
+  /* geometria do modelo */
   --glass-width: 340px;
   --glass-height: 50px;
   --glass-radius: 50%;
 
-  /* 1 backdrop */
-  --glass-blur: 20px;
-  --glass-saturate: 160%;
+  /* 1 — frost: desfoque moderado, saturação contida (acetinado, não neon) */
+  --glass-blur: 18px;
+  --glass-saturate: 120%;
+  --glass-brightness: 1.05;
 
-  /* 2 body tint — canal RGB separado da opacidade (reutilizável) */
+  /* 2 — corpo leitoso: branco translúcido reutilizável */
   --glass-tint: 255 255 255;
-  --glass-tint-opacity: 0.14;
+  --glass-tint-opacity: 0.28;
   --glass-fill: rgb(var(--glass-tint) / var(--glass-tint-opacity));
-  --glass-fill-fallback: rgb(var(--glass-tint) / 0.72);
+  --glass-fill-fallback: rgb(var(--glass-tint) / 0.78);
 
-  /* 3 rim */
-  --glass-border: rgb(255 255 255 / 0.28);
+  /* 3 — rim (luz cima-esquerda) */
+  --glass-border: rgb(255 255 255 / 0.42);
+  --glass-rim-top: rgb(255 255 255 / 0.78);
+  --glass-rim-side: rgb(255 255 255 / 0.28);
 
-  /* 4 specular */
-  --glass-highlight: rgb(255 255 255 / 0.55);
-  --glass-sheen: rgb(255 255 255 / 0.22);
+  /* 4 — specular curto */
+  --glass-sheen: rgb(255 255 255 / 0.28);
 
-  /* 5 inner depth */
-  --glass-inner: rgb(0 0 0 / 0.18);
+  /* 5 — espessura (sombra interna inferior) */
+  --glass-depth: rgb(0 0 0 / 0.16);
 
-  /* 6 elevation */
+  /* 6 — elevação: sombra difusa, offset baixo-direita */
+  --glass-shadow: 0 0 0;
   --glass-elevation:
-    0 1px 1px rgb(0 0 0 / 0.06),
-    0 8px 24px -6px rgb(0 0 0 / 0.35);
+    0 1px 2px rgb(0 0 0 / 0.12),
+    0 6px 18px rgb(0 0 0 / 0.22),
+    0 14px 36px rgb(0 0 0 / 0.14);
 
-  /* tipografia — grotesca geométrica, peso óptico para 50px de altura */
-  --glass-text: rgb(255 255 255 / 0.96);
+  /* tipografia do modelo: minúscula, integrada, leve */
+  --glass-text: rgb(255 255 255 / 0.88);
   --glass-font-size: 15px;
-  --glass-font-weight: 600;
-  --glass-tracking: 0.01em;
+  --glass-font-weight: 500;
+  --glass-tracking: 0.02em;
 
   position: relative;
   display: inline-flex;
@@ -59,7 +61,7 @@
   width: var(--glass-width);
   height: var(--glass-height);
   max-width: 100%;
-  padding: 0 22px;
+  padding: 0 24px;
   margin: 0;
   isolation: isolate;
   overflow: hidden;
@@ -73,6 +75,7 @@
   line-height: 1;
   text-align: center;
   text-decoration: none;
+  text-transform: lowercase;
   white-space: nowrap;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -80,36 +83,42 @@
   user-select: none;
   touch-action: manipulation;
 
-  /* fallback legível ANTES do blur (verdade do suporte) */
+  /* fallback legível sem backdrop-filter */
   background: var(--glass-fill-fallback);
+
+  /* 3+5+6 — rim, profundidade, elevação num único empilhamento */
   box-shadow:
     var(--glass-elevation),
-    inset 0 1px 0 var(--glass-highlight),
-    inset 0 -10px 20px var(--glass-inner);
+    inset 0 1px 0 var(--glass-rim-top),
+    inset 1px 0 0 var(--glass-rim-side),
+    inset 0 -1px 0 rgb(0 0 0 / 0.12),
+    inset 0 -10px 22px var(--glass-depth);
 
   transition:
     background 160ms ease,
     border-color 160ms ease,
     box-shadow 160ms ease,
-    transform 120ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    filter 160ms ease;
+    transform 140ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    color 160ms ease;
 }
 
-/* Camada 1 — frost real, só quando o browser consegue */
 @supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .glass-button {
     background: var(--glass-fill);
     -webkit-backdrop-filter:
-      blur(var(--glass-blur)) saturate(var(--glass-saturate));
+      blur(var(--glass-blur))
+      saturate(var(--glass-saturate))
+      brightness(var(--glass-brightness));
     backdrop-filter:
-      blur(var(--glass-blur)) saturate(var(--glass-saturate));
+      blur(var(--glass-blur))
+      saturate(var(--glass-saturate))
+      brightness(var(--glass-brightness));
   }
 }
 
 /**
- * Camada 4 — specular sheen
- * Gradiente curto no topo (luz incidente), não um verniz em 45% da área.
- * z-index negativo: atrás do label, nunca come o clique.
+ * Camada 4 — sheen superior (luz incidente)
+ * Gradiente curto, acetinado — não verniz plástico.
  */
 .glass-button::before {
   content: "";
@@ -119,15 +128,16 @@
   border-radius: inherit;
   pointer-events: none;
   background: linear-gradient(
-    180deg,
+    165deg,
     var(--glass-sheen) 0%,
-    transparent 42%
+    rgb(255 255 255 / 0.08) 28%,
+    transparent 55%
   );
 }
 
 /**
- * Camada 3 reforçada — Fresnel no perímetro
- * Aresta clara no topo/laterais; a borda CSS + este anel vendem a espessura.
+ * Anel interno fino — reforça a aresta do vidro usinado
+ * (equivalente ao “corte” claro no perímetro do modelo).
  */
 .glass-button::after {
   content: "";
@@ -136,9 +146,7 @@
   z-index: -1;
   border-radius: inherit;
   pointer-events: none;
-  box-shadow:
-    inset 0 0 0 1px rgb(255 255 255 / 0.08),
-    inset 0 1.5px 0 rgb(255 255 255 / 0.2);
+  box-shadow: inset 0 0 0 0.5px rgb(255 255 255 / 0.18);
 }
 
 .glass-button > * {
@@ -146,87 +154,98 @@
   z-index: 1;
 }
 
-/* ——— estados: feedback de material, não teatro ——— */
+/* ——— variante circular (mesmo material, outra geometria) ——— */
+.glass-button--circle {
+  --glass-width: 50px;
+  --glass-height: 50px;
+  --glass-radius: 50%;
+  padding: 0;
+  letter-spacing: 0;
+  text-transform: none;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.glass-button--circle .glass-icon {
+  display: block;
+  width: 1em;
+  height: 1em;
+  background: currentColor;
+  /* asterisco de 8 pontas do modelo, via máscara */
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2.5l1.1 7.05L19.8 6.2l-3.3 6.3 6 2.05-6.55 1.55L19.8 17.8l-6.7-3.35L12 21.5l-1.1-7.05L4.2 17.8l3.3-6.3-6-2.05 6.55-1.55L4.2 6.2l6.7 3.35L12 2.5z'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2.5l1.1 7.05L19.8 6.2l-3.3 6.3 6 2.05-6.55 1.55L19.8 17.8l-6.7-3.35L12 21.5l-1.1-7.05L4.2 17.8l3.3-6.3-6-2.05 6.55-1.55L4.2 6.2l6.7 3.35L12 2.5z'/%3E%3C/svg%3E")
+    center / contain no-repeat;
+}
+
+/* ——— estados ——— */
 .glass-button:hover {
-  --glass-tint-opacity: 0.2;
-  --glass-border: rgb(255 255 255 / 0.38);
+  --glass-tint-opacity: 0.34;
+  --glass-border: rgb(255 255 255 / 0.55);
   --glass-elevation:
-    0 1px 1px rgb(0 0 0 / 0.08),
-    0 10px 28px -6px rgb(0 0 0 / 0.4);
+    0 2px 4px rgb(0 0 0 / 0.12),
+    0 8px 22px rgb(0 0 0 / 0.24),
+    0 16px 40px rgb(0 0 0 / 0.16);
 }
 
 .glass-button:active {
-  --glass-tint-opacity: 0.1;
-  transform: scale(0.985);
+  --glass-tint-opacity: 0.22;
+  transform: scale(0.98);
   --glass-elevation:
-    0 1px 2px rgb(0 0 0 / 0.2),
-    0 4px 12px -4px rgb(0 0 0 / 0.3);
+    0 1px 2px rgb(0 0 0 / 0.18),
+    0 4px 12px rgb(0 0 0 / 0.2);
 }
 
 .glass-button:focus-visible {
-  outline: 2px solid rgb(255 255 255 / 0.65);
+  outline: 2px solid rgb(255 255 255 / 0.7);
   outline-offset: 3px;
 }
 
 .glass-button:disabled,
 .glass-button[aria-disabled="true"] {
-  opacity: 0.42;
+  opacity: 0.4;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-/* ——— tema sobre fundo claro (borda clara some; escurece o rim) ——— */
+/* ——— fundo claro ——— */
 .glass-button[data-glass-theme="light"] {
-  --glass-tint: 255 255 255;
-  --glass-tint-opacity: 0.55;
-  --glass-fill-fallback: rgb(255 255 255 / 0.88);
-  --glass-border: rgb(0 0 0 / 0.12);
-  --glass-highlight: rgb(255 255 255 / 0.9);
-  --glass-sheen: rgb(255 255 255 / 0.45);
-  --glass-inner: rgb(0 0 0 / 0.08);
-  --glass-text: rgb(15 15 15 / 0.92);
+  --glass-tint-opacity: 0.62;
+  --glass-fill-fallback: rgb(255 255 255 / 0.9);
+  --glass-border: rgb(0 0 0 / 0.1);
+  --glass-rim-top: rgb(255 255 255 / 0.95);
+  --glass-rim-side: rgb(255 255 255 / 0.55);
+  --glass-sheen: rgb(255 255 255 / 0.5);
+  --glass-depth: rgb(0 0 0 / 0.08);
+  --glass-text: rgb(20 20 20 / 0.78);
   --glass-elevation:
-    0 1px 1px rgb(0 0 0 / 0.04),
-    0 8px 20px -6px rgb(0 0 0 / 0.18);
+    0 1px 2px rgb(0 0 0 / 0.06),
+    0 6px 16px rgb(0 0 0 / 0.12),
+    0 12px 28px rgb(0 0 0 / 0.08);
 }
 
-.glass-button[data-glass-theme="light"]::after {
-  box-shadow:
-    inset 0 0 0 1px rgb(255 255 255 / 0.5),
-    inset 0 1.5px 0 rgb(255 255 255 / 0.65);
-}
-
-/* ——— tingimento: só muda a cor do material, não a estrutura ——— */
+/* ——— tingimentos (estrutura idêntica) ——— */
 .glass-button[data-tint="blue"] {
-  --glass-tint: 59 130 246;
-  --glass-tint-opacity: 0.32;
+  --glass-tint: 96 165 250;
+  --glass-tint-opacity: 0.34;
 }
 
 .glass-button[data-tint="teal"] {
-  --glass-tint: 20 184 166;
+  --glass-tint: 45 212 191;
   --glass-tint-opacity: 0.32;
 }
 
 .glass-button[data-tint="rose"] {
-  --glass-tint: 244 63 94;
-  --glass-tint-opacity: 0.3;
+  --glass-tint: 251 113 133;
+  --glass-tint-opacity: 0.34;
 }
 
 .glass-button[data-tint="ink"] {
   --glass-tint: 15 23 42;
-  --glass-tint-opacity: 0.42;
-  --glass-border: rgb(255 255 255 / 0.16);
-}
-
-/**
- * Tint customizado por variável (cor OU padrão):
- *   style="--glass-tint: 34 197 94; --glass-tint-opacity: .36"
- *
- * Para padrão/gradiente no corpo (substitui o fill canalizado):
- *   style="--glass-fill: linear-gradient(135deg, rgb(96 165 250 / .35), rgb(244 114 182 / .3))"
- */
-.glass-button[data-fill="custom"] {
-  background: var(--glass-fill);
+  --glass-tint-opacity: 0.4;
+  --glass-border: rgb(255 255 255 / 0.22);
+  --glass-text: rgb(255 255 255 / 0.9);
 }
 
 @media (prefers-reduced-transparency: reduce) {
