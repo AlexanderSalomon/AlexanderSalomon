@@ -53,9 +53,9 @@
     0 18px 40px rgb(0 0 0 / 0.16);
 
   --glass-text: rgb(255 255 255 / 0.9);
-  --glass-font-size: 15px;
+  --glass-font-size: 16px;
   --glass-font-weight: 500;
-  --glass-tracking: 0.03em;
+  --glass-tracking: 0.04em;
 
   box-sizing: border-box;
   position: relative;
