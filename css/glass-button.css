@@ -24,24 +24,24 @@
   --glass-saturate: 125%;
   --glass-brightness: 1.08;
 
-  /* 2 corpo leitoso — mais opaco que glass “limpo” */
+  /* 2 corpo leitoso — acetinado, deixa o fundo atravessar */
   --glass-tint: 255 255 255;
-  --glass-tint-opacity: 0.38;
+  --glass-tint-opacity: 0.32;
   --glass-fill: linear-gradient(
     180deg,
-    rgb(var(--glass-tint) / calc(var(--glass-tint-opacity) + 0.1)) 0%,
-    rgb(var(--glass-tint) / var(--glass-tint-opacity)) 45%,
-    rgb(var(--glass-tint) / calc(var(--glass-tint-opacity) - 0.04)) 100%
+    rgb(var(--glass-tint) / calc(var(--glass-tint-opacity) + 0.08)) 0%,
+    rgb(var(--glass-tint) / var(--glass-tint-opacity)) 48%,
+    rgb(var(--glass-tint) / calc(var(--glass-tint-opacity) - 0.03)) 100%
   );
-  --glass-fill-fallback: rgb(var(--glass-tint) / 0.82);
+  --glass-fill-fallback: rgb(var(--glass-tint) / 0.8);
 
-  /* 3 rim — destaque forte no topo, suave nas laterais */
-  --glass-border: rgb(255 255 255 / 0.35);
-  --glass-rim-top: rgb(255 255 255 / 0.92);
-  --glass-rim-side: rgb(255 255 255 / 0.35);
+  /* 3 rim — fino e claro no topo, sem aresta “plástica” */
+  --glass-border: rgb(255 255 255 / 0.32);
+  --glass-rim-top: rgb(255 255 255 / 0.78);
+  --glass-rim-side: rgb(255 255 255 / 0.28);
 
   /* 4 sheen */
-  --glass-sheen: rgb(255 255 255 / 0.32);
+  --glass-sheen: rgb(255 255 255 / 0.26);
 
   /* 5 profundidade */
   --glass-depth: rgb(0 0 0 / 0.2);
@@ -90,10 +90,10 @@
   background: var(--glass-fill-fallback);
   box-shadow:
     var(--glass-elevation),
-    inset 0 1.5px 0 var(--glass-rim-top),
+    inset 0 1px 0 var(--glass-rim-top),
     inset 1px 0 0 var(--glass-rim-side),
     inset 0 -1px 1px var(--glass-depth),
-    inset 0 -12px 24px rgb(0 0 0 / 0.14);
+    inset 0 -10px 20px rgb(0 0 0 / 0.12);
 
   transition:
     background 160ms ease,
@@ -174,7 +174,7 @@
 }
 
 .glass-button:hover {
-  --glass-tint-opacity: 0.44;
+  --glass-tint-opacity: 0.38;
   --glass-border: rgb(255 255 255 / 0.5);
   --glass-elevation:
     0 3px 6px rgb(0 0 0 / 0.14),
