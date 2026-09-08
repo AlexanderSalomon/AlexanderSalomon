@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Glass Button — modelo</title>
+  <link rel="stylesheet" href="../css/glass-button.css" />
+  <style>
+    :root {
+      --ink: #141414;
+      --mute: #6a6a6a;
+      --paper: #efece7;
+      --ref-red: #c62828;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 48px 24px 28px;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    header p {
+      margin: 0;
+      max-width: 40em;
+      color: var(--mute);
+    }
+
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto 32px;
+      border: 1px solid rgb(0 0 0 / 0.08);
+      overflow: hidden;
+    }
+
+    @media (max-width: 720px) {
+      .compare {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .compare__pane {
+      position: relative;
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      padding: 36px 20px;
+      background: var(--ref-red);
+    }
+
+    .compare__pane--ref {
+      padding: 0;
+      background: #111;
+    }
+
+    .compare__pane--ref img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 320px;
+      object-fit: cover;
+    }
+
+    .compare__label {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      margin: 0;
+      padding: 4px 8px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: rgb(0 0 0 / 0.35);
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .board .field {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      min-height: 240px;
+      padding: 40px 20px;
+    }
+
+    .field__meta {
+      margin: 0;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgb(255 255 255 / 0.7);
+    }
+
+    .field--photo {
+      background:
+        linear-gradient(180deg, rgb(0 0 0 / 0.12), rgb(0 0 0 / 0.22)),
+        url("https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80")
+          center / cover no-repeat;
+    }
+
+    .field--chroma {
+      background:
+        radial-gradient(ellipse 70% 55% at 18% 35%, #38bdf8, transparent 55%),
+        radial-gradient(ellipse 65% 50% at 82% 68%, #f472b6, transparent 50%),
+        #0f172a;
+    }
+
+    .field--ink {
+      background: #0a0a0a;
+    }
+
+    .field--light {
+      background: linear-gradient(165deg, #e7e4de, #f6f4ef 50%, #d8d4cc);
+    }
+
+    .field--light .field__meta {
+      color: rgb(0 0 0 / 0.4);
+    }
+
+    footer {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 36px 24px 64px;
+      color: var(--mute);
+      font-size: 13px;
+    }
+
+    footer pre {
+      margin: 14px 0 0;
+      padding: 16px;
+      overflow-x: auto;
+      border: 1px solid rgb(0 0 0 / 0.08);
+      background: #fff;
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+
+    code {
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Modelo de referência → material</h1>
+    <p>
+      Cápsula stadium 340×50 (não elipse) e círculo 50×50 no mesmo vidro
+      acetinado: corpo leitoso, rim claro no topo, sombra difusa.
+      À esquerda o modelo; à direita a implementação no mesmo vermelho.
+    </p>
+  </header>
+
+  <section class="compare" aria-label="Comparação com o modelo">
+    <div class="compare__pane compare__pane--ref">
+      <p class="compare__label">Modelo</p>
+      <img
+        src="assets/reference-redomedia.jpg"
+        alt="Referência: botão cápsula e botão circular em vidro fosco sobre vermelho"
+      />
+    </div>
+    <div class="compare__pane">
+      <p class="compare__label">Implementação</p>
+      <div class="row">
+        <button type="button" class="glass-button glass-button--circle" aria-label="ação">
+          <span class="glass-icon" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="glass-button">redomedia</button>
+      </div>
+    </div>
+  </section>
+
+  <main class="board">
+    <section class="field field--photo">
+      <p class="field__meta">Fotografia</p>
+      <div class="row">
+        <button type="button" class="glass-button glass-button--circle" aria-label="mais">
+          <span class="glass-icon" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="glass-button">continuar</button>
+      </div>
+    </section>
+
+    <section class="field field--chroma">
+      <p class="field__meta">Cromia</p>
+      <button type="button" class="glass-button" data-tint="blue">entrar</button>
+    </section>
+
+    <section class="field field--ink">
+      <p class="field__meta">Preto</p>
+      <button type="button" class="glass-button" data-tint="teal">salvar</button>
+    </section>
+
+    <section class="field field--light">
+      <p class="field__meta">Claro</p>
+      <button type="button" class="glass-button" data-glass-theme="light">confirmar</button>
+    </section>
+  </main>
+
+  <footer>
+    <p>A forma e o material vêm do modelo; a cor é token:</p>
+    <pre><code>&lt;button class="glass-button"&gt;redomedia&lt;/button&gt;
+
+&lt;button class="glass-button glass-button--circle" aria-label="ação"&gt;
+  &lt;span class="glass-icon" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;button class="glass-button"
+  style="--glass-tint: 34 197 94; --glass-tint-opacity: 0.34"&gt;
+  verde
+&lt;/button&gt;</code></pre>
+  </footer>
+</body>
+</html>
